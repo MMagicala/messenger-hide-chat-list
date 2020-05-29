@@ -3,7 +3,7 @@
   "name": "Messenger Hide Chat List",
   "website": "https://github.com/MMagicala/messenger-hide-chat-list",
   "description": "Hides the chat list on the left of the screen in Facebook Messenger's desktop website. Helps users who want to maintain privacy.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "icons": {
     "64": "icons/icon.png"
   },

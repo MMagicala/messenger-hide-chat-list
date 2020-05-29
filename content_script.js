@@ -10,7 +10,7 @@ if(your_chat_head != undefined){
 	addListener("hide");
 }
 
-// Observe changes in the webpage and update our listeners accordingly
+// Observe changes in the webpage and update our properties and listeners accordingly
 var observer = new MutationObserver(
 	function(mutations, me){
 		// Add listener to your new chat head
@@ -18,6 +18,7 @@ var observer = new MutationObserver(
 			your_chat_head = document.getElementsByClassName("_7sta _7stb _87u_")[0];
 			if(document.getElementsByClassName("_7sta _7stb _87u_")[0] != undefined){
 				addListener("hide");
+				your_chat_head.setAttribute("style", "cursor:pointer");
 			}
 		}
 
@@ -26,6 +27,7 @@ var observer = new MutationObserver(
 			recipient_chat_head = document.getElementsByClassName("_6ynm")[0];
 			if(document.getElementsByClassName("_6ynm")[0] != undefined){
 				addListener("show");
+				recipient_chat_head.setAttribute("style", "cursor:pointer");
 			}
 		}
 	}
