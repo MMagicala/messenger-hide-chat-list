@@ -1,39 +1,56 @@
-// Wait for the your chat head to exist
+// Add listeners to your chat head and recipient chat head if they already exist
+
+var recipient_chat_head = document.getElementsByClassName("_6ynm")[0];
+var your_chat_head = document.getElementsByClassName("_7sta _7stb _87u_")[0];
+
+if(recipient_chat_head != undefined){
+	addListener("show");
+}
+if(your_chat_head != undefined){
+	addListener("hide");
+}
+
+// Observe changes in the webpage and update our listeners accordingly
 var observer = new MutationObserver(
 	function(mutations, me){
-		var your_chat_head = document.getElementsByClassName("_7sta _7stb _87u_")[0];
-		if(your_chat_head){
-			// Once it does, we can add a listener to it
-			inject(your_chat_head);
-			me.disconnect();
-			return;
+		// Add listener to your new chat head
+		if(your_chat_head != document.getElementsByClassName("_7sta _7stb _87u_")[0]){
+			your_chat_head = document.getElementsByClassName("_7sta _7stb _87u_")[0];
+			if(document.getElementsByClassName("_7sta _7stb _87u_")[0] != undefined){
+				addListener("hide");
+			}
+		}
+
+		// Add listener to new recipient's chat head
+		if(recipient_chat_head != document.getElementsByClassName("_6ynm")[0]){
+			recipient_chat_head = document.getElementsByClassName("_6ynm")[0];
+			if(document.getElementsByClassName("_6ynm")[0] != undefined){
+				addListener("show");
+			}
 		}
 	}
 );
 
-var config = {childList: true, attributes: true, subtree: true};
-
-// Start looking for the changes in the webpage we need
 var webpage = document.getElementById("facebook");
+var config = {childList: true, attributes: true, subtree: true};
 observer.observe(webpage, config);
 
-function inject(your_chat_head){
-	your_chat_head.onclick = function(){
-		// Get the recipient's chat head and the chat list
-		var recipient_chat_head = document.getElementsByClassName("_6ynm")[0];
-		var chat_list = document.getElementsByClassName("_1enh _7q1s")[0];
-		
-		// If the recipient chat head or the chat list aren't available at the moment, return
-		if(recipient_chat_head == undefined || chat_list == undefined){
-			return;
-		}
-		
-		// Add a listener where double clicking the recipient's chat head shows the chat list again
+// Does the work of adding/remove listeners
+function addListener(listener){
+	if(listener == "hide"){
+		your_chat_head.onclick = function(){
+			var chat_list = document.getElementsByClassName("_1enh _7q1s")[0];
+			if(recipient_chat_head != undefined && chat_list != undefined){
+				chat_list.style.display = "none";
+			}
+		};
+	}else if(listener == "show"){
 		recipient_chat_head.onclick = function(){
-			chat_list.style.display = "";
-		}
-
-		// Hide the chat list
-		chat_list.style.display = "none";
-	};
+			var chat_list = document.getElementsByClassName("_1enh _7q1s")[0];
+			if(chat_list != undefined){
+				chat_list.style.display = "";
+			}
+		};
+	}
 }
+
