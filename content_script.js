@@ -1,3 +1,22 @@
+// Look at settings and hide the chat list if needed
+
+var hideChatListOnStart = false;
+var settingsAppliedOnStart = false;
+
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
+
+function onGot(item) {
+	// Replace default with any settings we can find
+  if (item.hidechatlist) {
+    hideChatListOnStart = true;
+  }
+}
+
+let getting = browser.storage.sync.get("hidechatlist");
+getting.then(onGot, onError);
+
 // Add listeners to your chat head and recipient chat head if they already exist
 
 var recipient_chat_head = document.getElementsByClassName("_6ynm")[0];
@@ -13,6 +32,13 @@ if(your_chat_head != undefined){
 // Observe changes in the webpage and update our properties and listeners accordingly
 var observer = new MutationObserver(
 	function(mutations, me){
+		// Apply settings once the chat list is loaded
+		var chat_list = document.getElementsByClassName("_1enh _7q1s")[0];
+		if(!settingsAppliedOnStart && hideChatListOnStart && chat_list != undefined){
+			chat_list.style.display = "none";
+			settingsAppliedOnStart = true;
+		}
+		
 		// Add listener to your new chat head
 		if(your_chat_head != document.getElementsByClassName("_7sta _7stb _87u_")[0]){
 			your_chat_head = document.getElementsByClassName("_7sta _7stb _87u_")[0];

@@ -7,11 +7,20 @@
   "icons": {
     "64": "icons/icon.png"
   },
-	
+	"options_ui":{
+		"page": "options.html"
+		,"open_in_tab": true
+	},
+	"permissions": ["storage"],
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "{73a94ba2-5eca-4144-8769-6ee6529b3579}"
+		}
+	},
 	"content_scripts": [
     {
       "matches": [
-        "*://*.messenger.com/*"
+        "https://messenger.com/*"
       ],
       "js": [
         "content_script.js"
